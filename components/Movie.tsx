@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { Genre, Movie } from '../types'
-import { formatDate, formatGenres } from '../utilities/format'
+import { formatAverage, formatDate, formatGenres } from '../utilities/format'
+import imageLoader from '../utilities/imageLoader'
 
 type Props = {
   movie: Movie
@@ -11,18 +12,20 @@ type Props = {
 export default function MovieComponent({ movie, genres }: Props) {
   return (
     <div className="mt-8">
-      <a href={`movie/${movie.id}`}>
+      <a href={`movies/${movie.id}`}>
         <Image
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          loader={imageLoader}
+          unoptimized
+          src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
           alt="poster"
           className="transition duration-150 ease-in-out hover:opacity-75"
-          width={500}
-          height={750}
+          width={300}
+          height={450}
         />
       </a>
       <div className="mt-2">
         <a
-          href={`movie/${movie.id}`}
+          href={`movies/${movie.id}`}
           className="mt-2 text-lg hover:text-gray-300"
         >
           {movie.title}
@@ -36,7 +39,7 @@ export default function MovieComponent({ movie, genres }: Props) {
               />
             </g>
           </svg>
-          <span className="ml-1">{movie.vote_average * 10} %</span>
+          <span className="ml-1">{formatAverage(movie.vote_average)}</span>
           <span className="mx-2">|</span>
           <span>{formatDate(movie.release_date)}</span>
         </div>

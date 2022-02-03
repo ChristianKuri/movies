@@ -9,3 +9,8 @@ export const formatDate = (date: string) =>
     month: 'short',
     day: 'numeric',
   })
+
+export const getNameFromGenders = (genres: Genre[]) =>
+  genres?.map((genre) => genre.name).join(', ')
+
+export const formatAverage = (average: number) => `${average * 10} %`
