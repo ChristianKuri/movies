@@ -18,7 +18,7 @@ export default function index({ popularPeople }: Props) {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {popularPeople.map((actor) => (
             <div className="mt-8 actor">
-              <a href="{{ route('actors.show', $actor['id']) }}">
+              <a href={`/actors/${actor.id}`}>
                 <Image
                   loader={imageLoader}
                   unoptimized
@@ -31,7 +31,7 @@ export default function index({ popularPeople }: Props) {
               </a>
               <div className="mt-2">
                 <a
-                  href="{{ route('actors.show', $actor['id']) }}"
+                  href={`/actors/${actor.id}`}
                   className="text-lg hover:text-gray-300"
                 >
                   {actor.name}
