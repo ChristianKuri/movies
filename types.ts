@@ -32,6 +32,10 @@ export interface Movie {
   video: boolean
   vote_average: number
   vote_count: number
+  first_air_date?: string
+  name?: string
+  origin_country?: string
+  original_name?: string
 }
 
 export interface MovieDetails {
@@ -183,4 +187,22 @@ export interface GetSearchResults {
   results: Movie[]
   total_pages: number
   total_results: number
+}
+
+export interface GetPopularPeopleResults {
+  page: number
+  results: Person[]
+  total_pages: number
+  total_results: number
+}
+
+export interface Person {
+  adult: boolean
+  gender: number
+  id: number
+  known_for: Movie[]
+  known_for_department: string
+  name: string
+  popularity: number
+  profile_path: string
 }

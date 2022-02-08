@@ -4,10 +4,12 @@ import {
   GetGenreListResults,
   GetNowPlayingMoviesResults,
   GetPopularMoviesResults,
+  GetPopularPeopleResults,
   GetSearchResults,
   GetWatchProvidersResults,
   Movie,
   MovieDetails,
+  Person,
 } from '../types'
 
 export const getPopularMovies = async (): Promise<Movie[]> => {
@@ -66,6 +68,16 @@ export const getSearch = async (query: string): Promise<Movie[]> => {
   )
 
   const { results }: GetSearchResults = await res.json()
+
+  return results
+}
+
+export const getPopularPeople = async (): Promise<Person[]> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/person/popular?api_key=${process.env.THEMOVIEDB_API}`,
+  )
+
+  const { results }: GetPopularPeopleResults = await res.json()
 
   return results
 }
