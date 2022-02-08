@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import Search from './Search'
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -32,7 +33,9 @@ export default function Layout({ children }: { children: ReactNode }) {
               </a>
             </li>
           </ul>
-          <div className="flex flex-col items-center md:flex-row">-search-</div>
+          <div className="flex flex-col items-center md:flex-row">
+            <Search />
+          </div>
         </div>
       </nav>
       {children}

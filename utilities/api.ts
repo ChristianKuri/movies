@@ -4,6 +4,7 @@ import {
   GetGenreListResults,
   GetNowPlayingMoviesResults,
   GetPopularMoviesResults,
+  GetSearchResults,
   GetWatchProvidersResults,
   Movie,
   MovieDetails,
@@ -55,6 +56,16 @@ export const getWatchProviders = async (id: string): Promise<Country> => {
   )
 
   const { results }: GetWatchProvidersResults = await res.json()
+
+  return results
+}
+
+export const getSearch = async (query: string): Promise<Movie[]> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.THEMOVIEDB_API}&query=${query}`,
+  )
+
+  const { results }: GetSearchResults = await res.json()
 
   return results
 }

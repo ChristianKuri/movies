@@ -90,11 +90,11 @@ export default function MoviePage({ movie, providers }: Props) {
                       <Image
                         loader={imageLoader}
                         unoptimized
-                        src={`https://image.tmdb.org/t/p/w200/${provider.logo_path}`}
+                        src={`https://image.tmdb.org/t/p/w92/${provider.logo_path}`}
                         alt="actor"
                         className="w-64 lg:w-96"
-                        width={100}
-                        height={100}
+                        width={92}
+                        height={92}
                       />
                     </div>
                   ))}

@@ -177,3 +177,10 @@ export interface ProvidersByCountry {
   buy?: Provider[]
   rent?: Provider[]
 }
+
+export interface GetSearchResults {
+  page: number
+  results: Movie[]
+  total_pages: number
+  total_results: number
+}
