@@ -1,7 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
-import { getMovieDetails } from '../../utilities/api'
-import { MovieDetails } from '../../types'
+import geoip, { Lookup } from 'geoip-lite'
+import requestIp from 'request-ip'
+import { getMovieDetails, getWatchProviders } from '../../utilities/api'
+import { MovieDetails, ProvidersByCountry } from '../../types'
 import imageLoader from '../../utilities/imageLoader'
 import {
   formatAverage,
@@ -13,11 +15,12 @@ import VideoPlayer from '../../components/VideoPlayer'
 
 type Props = {
   movie: MovieDetails
+  providers: ProvidersByCountry
 }
 
-export default function MoviePage({ movie }: Props) {
+export default function MoviePage({ movie, providers }: Props) {
   return (
-    <>
+    <div key={movie.id}>
       <div className="border-b border-gray-800 movie-info">
         <div className="container flex flex-col px-4 py-16 mx-auto lg:flex-row">
           <div className="flex-none">
@@ -60,7 +63,7 @@ export default function MoviePage({ movie }: Props) {
               <h4 className="font-semibold text-white">Featured Crew</h4>
               <div className="grid grid-cols-2 gap-4 mt-4 md:grid-cols-4">
                 {movie.credits?.crew.slice(0, 8).map((crew) => (
-                  <div className="mr-8">
+                  <div className="mr-8" key={crew.id}>
                     <div>{crew.name}</div>
                     <div className="text-sm text-gray-400">{crew.job}</div>
                   </div>
@@ -75,6 +78,29 @@ export default function MoviePage({ movie }: Props) {
                 videoKey={movie.videos.results[0].key}
               />
             </div>
+
+            {providers?.flatrate && (
+              <>
+                <h4 className="mt-12 font-semibold text-white">
+                  Watch it on Stream!
+                </h4>
+                <div className="grid grid-cols-2 gap-4 mt-4 md:grid-cols-4">
+                  {providers.flatrate?.map((provider) => (
+                    <div key={provider.provider_id}>
+                      <Image
+                        loader={imageLoader}
+                        unoptimized
+                        src={`https://image.tmdb.org/t/p/w200/${provider.logo_path}`}
+                        alt="actor"
+                        className="w-64 lg:w-96"
+                        width={100}
+                        height={100}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -85,7 +111,7 @@ export default function MoviePage({ movie }: Props) {
           <h2 className="text-4xl font-semibold">Cast</h2>
           <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
             {movie.credits?.cast.map((cast) => (
-              <div className="mt-8">
+              <div className="mt-8" key={cast.id}>
                 <a href={`/actors/${cast.id}`}>
                   <ProfilePhoto cast={cast} />
                 </a>
@@ -104,7 +130,7 @@ export default function MoviePage({ movie }: Props) {
         </div>
       </div>
       {/* end movie-cast */}
-    </>
+    </div>
   )
 }
 
@@ -112,15 +138,27 @@ type Params = {
   params: {
     id: string
   }
+  req: any
 }
 
-export async function getServerSideProps({ params }: Params) {
+export async function getServerSideProps({ params, req }: Params) {
   const movie = await getMovieDetails(params.id)
+  const providersByCountry = await getWatchProviders(params.id)
+
+  const ip =
+    requestIp.getClientIp(req) === '::1'
+      ? '207.97.227.239'
+      : requestIp.getClientIp(req) ?? '207.97.227.239'
+  const geo: Lookup | null = geoip.lookup(ip)
+  const country = geo?.country ?? 'US'
+  const providers: ProvidersByCountry | null =
+    providersByCountry[country] ?? providersByCountry.US ?? null
 
   // Pass data to the page via props
   return {
     props: {
       movie,
+      providers,
     },
   }
 }

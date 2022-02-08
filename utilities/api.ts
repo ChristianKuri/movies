@@ -1,8 +1,10 @@
 import {
+  Country,
   Genre,
   GetGenreListResults,
   GetNowPlayingMoviesResults,
   GetPopularMoviesResults,
+  GetWatchProvidersResults,
   Movie,
   MovieDetails,
 } from '../types'
@@ -45,4 +47,14 @@ export const getMovieDetails = async (id: string): Promise<MovieDetails> => {
   const movieDetails: MovieDetails = await res.json()
 
   return movieDetails
+}
+
+export const getWatchProviders = async (id: string): Promise<Country> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${process.env.THEMOVIEDB_API}`,
+  )
+
+  const { results }: GetWatchProvidersResults = await res.json()
+
+  return results
 }

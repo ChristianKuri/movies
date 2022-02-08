@@ -154,3 +154,26 @@ export interface Video {
   published_at: string
   id: string
 }
+
+export interface GetWatchProvidersResults {
+  id: number
+  results: Country
+}
+
+export interface Country {
+  [key: string]: ProvidersByCountry
+}
+
+export interface Provider {
+  display_priority: number
+  logo_path: string
+  provider_id: number
+  provider_name: string
+}
+
+export interface ProvidersByCountry {
+  link: string
+  flatrate?: Provider[]
+  buy?: Provider[]
+  rent?: Provider[]
+}
