@@ -23,12 +23,12 @@ export default function Layout({ children }: { children: ReactNode }) {
               </a>
             </li>
             <li className="mt-3 md:ml-6 md:mt-0">
-              <a href="series" className="hover:text-gray-300">
+              <a href="/series" className="hover:text-gray-300">
                 Series
               </a>
             </li>
             <li className="mt-3 md:ml-6 md:mt-0">
-              <a href="actors" className="hover:text-gray-300">
+              <a href="/actors" className="hover:text-gray-300">
                 Actors
               </a>
             </li>
