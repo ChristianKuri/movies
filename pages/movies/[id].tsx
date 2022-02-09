@@ -71,13 +71,14 @@ export default function MoviePage({ movie, providers }: Props) {
               </div>
             </div>
 
-            {/* add video modal */}
-            <div className="mt-12">
-              <VideoPlayer
-                buttonText="Play Trailer"
-                videoKey={movie.videos.results[0].key}
-              />
-            </div>
+            {movie.videos?.results.length > 0 && (
+              <div className="mt-12">
+                <VideoPlayer
+                  buttonText="Play Trailer"
+                  videoKey={movie.videos.results[0].key}
+                />
+              </div>
+            )}
 
             {providers?.flatrate && (
               <>
