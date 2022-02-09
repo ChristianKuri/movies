@@ -1,4 +1,4 @@
-import { Genre, Movie, MovieCredit } from '../types'
+import { Genre, Movie, MovieCredit, Serie } from '../types'
 
 export const formatGenres = (genres: Genre[], genreIds: number[]) =>
   genreIds.map((id) => genres.find((genre) => genre.id === id)?.name).join(', ')
@@ -26,10 +26,19 @@ export const getAge = (date: string) => {
   return age
 }
 
-export const sortByDate = (array: Movie[] | MovieCredit[]) => {
+export const sortMovieByDate = (array: Movie[] | MovieCredit[]) => {
   const sortedArray = array.sort((a, b) => {
     const dateA = new Date(a.release_date)
     const dateB = new Date(b.release_date)
+    return dateB.getTime() - dateA.getTime()
+  })
+  return sortedArray
+}
+
+export const sortSerieByDate = (array: Serie[]) => {
+  const sortedArray = array.sort((a, b) => {
+    const dateA = new Date(a.first_air_date)
+    const dateB = new Date(b.first_air_date)
     return dateB.getTime() - dateA.getTime()
   })
   return sortedArray

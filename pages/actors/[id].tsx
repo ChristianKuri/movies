@@ -1,15 +1,29 @@
 import React from 'react'
 import MovieComponent from '../../components/Movie'
+import SerieComponent from '../../components/Serie'
 import { Genre, PersonDetails } from '../../types'
-import { getGenreList, getPersonDetails } from '../../utilities/api'
-import { getAge, sortByDate } from '../../utilities/format'
+import {
+  getMovieGenreList,
+  getPersonDetails,
+  getSerieGenreList,
+} from '../../utilities/api'
+import {
+  getAge,
+  sortMovieByDate,
+  sortSerieByDate,
+} from '../../utilities/format'
 
 type Props = {
   actor: PersonDetails
-  genreList: Genre[]
+  movieGenreList: Genre[]
+  serieGenreList: Genre[]
 }
 
-export default function ActorPage({ actor, genreList }: Props) {
+export default function ActorPage({
+  actor,
+  movieGenreList,
+  serieGenreList,
+}: Props) {
   return (
     <div className="border-b border-gray-800 movie-info">
       <div className="container flex flex-col px-4 py-16 mx-auto md:flex-row">
@@ -109,11 +123,23 @@ export default function ActorPage({ actor, genreList }: Props) {
 
           <p className="mt-8 text-gray-300">{actor.biography}</p>
 
-          <h4 className="mt-12 font-semibold">Movies</h4>
+          <h2 className="mt-12 text-lg font-semibold tracking-wider text-orange-500 uppercase">
+            Movies
+          </h2>
 
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-3 xl:grid-cols-4 ">
-            {sortByDate(actor.movie_credits.cast).map((movie) => (
-              <MovieComponent movie={movie} genres={genreList} />
+            {sortMovieByDate(actor.movie_credits.cast).map((movie) => (
+              <MovieComponent movie={movie} genres={movieGenreList} />
+            ))}
+          </div>
+
+          <h2 className="mt-12 text-lg font-semibold tracking-wider text-orange-500 uppercase">
+            Series
+          </h2>
+
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-3 xl:grid-cols-4 ">
+            {sortSerieByDate(actor.tv_credits.cast).map((serie) => (
+              <SerieComponent serie={serie} genres={serieGenreList} />
             ))}
           </div>
         </div>
@@ -130,13 +156,15 @@ type Params = {
 
 export async function getServerSideProps({ params }: Params) {
   const actor = await getPersonDetails(params.id)
-  const genreList = await getGenreList()
+  const movieGenreList = await getMovieGenreList()
+  const serieGenreList = await getSerieGenreList()
 
   // Pass data to the page via props
   return {
     props: {
       actor,
-      genreList,
+      movieGenreList,
+      serieGenreList,
     },
   }
 }

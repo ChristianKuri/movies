@@ -5,12 +5,15 @@ import {
   GetNowPlayingMoviesResults,
   GetPopularMoviesResults,
   GetPopularPeopleResults,
+  GetPopularSeriesResults,
   GetSearchResults,
+  GetTopRatedSeriesResults,
   GetWatchProvidersResults,
   Movie,
   MovieDetails,
   Person,
   PersonDetails,
+  Serie,
 } from '../types'
 
 export const getPopularMovies = async (): Promise<Movie[]> => {
@@ -33,9 +36,19 @@ export const getNowPlayingMovies = async (): Promise<Movie[]> => {
   return results
 }
 
-export const getGenreList = async (): Promise<Genre[]> => {
+export const getMovieGenreList = async (): Promise<Genre[]> => {
   const res = await fetch(
     `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.THEMOVIEDB_API}`,
+  )
+
+  const { genres }: GetGenreListResults = await res.json()
+
+  return genres
+}
+
+export const getSerieGenreList = async (): Promise<Genre[]> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/genre/tv/list?api_key=${process.env.THEMOVIEDB_API}`,
   )
 
   const { genres }: GetGenreListResults = await res.json()
@@ -91,4 +104,24 @@ export const getPersonDetails = async (id: string): Promise<PersonDetails> => {
   const movieDetails: PersonDetails = await res.json()
 
   return movieDetails
+}
+
+export const getPopularSeries = async (): Promise<Serie[]> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.THEMOVIEDB_API}`,
+  )
+
+  const { results }: GetPopularSeriesResults = await res.json()
+
+  return results
+}
+
+export const getTopRatedSeries = async (): Promise<Serie[]> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.THEMOVIEDB_API}`,
+  )
+
+  const { results }: GetTopRatedSeriesResults = await res.json()
+
+  return results
 }
