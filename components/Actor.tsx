@@ -14,7 +14,11 @@ export default function Actor({ actor }: Props) {
         <Image
           loader={imageLoader}
           unoptimized
-          src={`https://image.tmdb.org/t/p/w235_and_h235_face/${actor.profile_path}`}
+          src={
+            actor.profile_path
+              ? `https://image.tmdb.org/t/p/w235_and_h235_face/${actor.profile_path}`
+              : `https://ui-avatars.com/api/?size=235&name=${actor.name}`
+          }
           alt="profile image"
           className="transition duration-150 ease-in-out hover:opacity-75"
           width={235}

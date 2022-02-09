@@ -72,9 +72,9 @@ export const getSearch = async (query: string): Promise<Movie[]> => {
   return results
 }
 
-export const getPopularPeople = async (): Promise<Person[]> => {
+export const getPopularPeople = async (page = 1): Promise<Person[]> => {
   const res = await fetch(
-    `https://api.themoviedb.org/3/person/popular?api_key=${process.env.THEMOVIEDB_API}`,
+    `https://api.themoviedb.org/3/person/popular?api_key=${process.env.THEMOVIEDB_API}&page=${page}`,
   )
 
   const { results }: GetPopularPeopleResults = await res.json()
