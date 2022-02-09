@@ -10,6 +10,7 @@ import {
   Movie,
   MovieDetails,
   Person,
+  PersonDetails,
 } from '../types'
 
 export const getPopularMovies = async (): Promise<Movie[]> => {
@@ -80,4 +81,14 @@ export const getPopularPeople = async (page = 1): Promise<Person[]> => {
   const { results }: GetPopularPeopleResults = await res.json()
 
   return results
+}
+
+export const getPersonDetails = async (id: string): Promise<PersonDetails> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.THEMOVIEDB_API}&append_to_response=external_ids,movie_credits,tv_credits`,
+  )
+
+  const movieDetails: PersonDetails = await res.json()
+
+  return movieDetails
 }

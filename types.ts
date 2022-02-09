@@ -206,3 +206,82 @@ export interface Person {
   popularity: number
   profile_path: string
 }
+
+export interface PersonDetails {
+  adult: boolean
+  also_known_as: string[]
+  biography: string
+  birthday: string | null
+  deathday: string | null
+  gender: number
+  homepage: string | null
+  id: number
+  imdb_id: string
+  known_for_department: string
+  name: string
+  place_of_birth: string | null
+  popularity: number
+  profile_path?: string
+  external_ids: ExternalIDS
+  movie_credits: MovieCredits
+  tv_credits: TvCredits
+}
+
+export interface MovieCredits {
+  cast: MovieCredit[]
+  crew: any
+}
+
+export interface TvCredits {
+  cast: TvCredit[]
+  crew: any
+}
+
+export interface MovieCredit {
+  character: string
+  credit_id: string
+  release_date: string
+  vote_count: number
+  video: boolean
+  adult: boolean
+  vote_average: number
+  title: string
+  genre_ids: number[]
+  original_language: string
+  original_title: string
+  popularity: number
+  id: number
+  backdrop_path: string | null
+  overview: string
+  poster_path: string | null
+}
+
+export interface TvCredit {
+  credit_id: string
+  original_name: string
+  id: number
+  genre_ids: number[]
+  character: string
+  name: string
+  poster_path: string | null
+  vote_count: number
+  vote_average: number
+  popularity: number
+  episode_count: number
+  original_language: string
+  first_air_date: string
+  backdrop_path: string | null
+  overview: string
+  origin_country: string[]
+}
+
+export interface ExternalIDS {
+  imdb_id: string | null
+  facebook_id: string | null
+  freebase_mid: string | null
+  freebase_id: string | null
+  tvrage_id: number | null
+  twitter_id: string | null
+  id: number
+  instagram_id: string | null
+}

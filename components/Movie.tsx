@@ -1,31 +1,41 @@
 import React from 'react'
 import Image from 'next/image'
-import { Genre, Movie } from '../types'
+import { Genre, Movie, MovieCredit } from '../types'
 import { formatAverage, formatDate, formatGenres } from '../utilities/format'
 import imageLoader from '../utilities/imageLoader'
 
 type Props = {
-  movie: Movie
+  movie: Movie | MovieCredit
   genres: Genre[]
 }
 
 export default function MovieComponent({ movie, genres }: Props) {
   return (
     <div className="mt-8">
-      <a href={`movies/${movie.id}`}>
-        <Image
-          loader={imageLoader}
-          unoptimized
-          src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
-          alt="poster"
-          className="transition duration-150 ease-in-out hover:opacity-75"
-          width={300}
-          height={450}
-        />
+      <a href={`/movies/${movie.id}`}>
+        {movie.poster_path ? (
+          <Image
+            loader={imageLoader}
+            unoptimized
+            src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+            alt="poster"
+            className="transition duration-150 ease-in-out hover:opacity-75"
+            width={300}
+            height={450}
+          />
+        ) : (
+          <img
+            className="transition duration-150 ease-in-out hover:opacity-75"
+            src="https://via.placeholder.com/300x450"
+            alt="actor"
+            width={300}
+            height={450}
+          />
+        )}
       </a>
       <div className="mt-2">
         <a
-          href={`movies/${movie.id}`}
+          href={`/movies/${movie.id}`}
           className="mt-2 text-lg hover:text-gray-300"
         >
           {movie.title}
