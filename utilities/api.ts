@@ -14,6 +14,7 @@ import {
   Person,
   PersonDetails,
   Serie,
+  SerieDetails,
 } from '../types'
 
 export const getPopularMovies = async (): Promise<Movie[]> => {
@@ -124,4 +125,14 @@ export const getTopRatedSeries = async (): Promise<Serie[]> => {
   const { results }: GetTopRatedSeriesResults = await res.json()
 
   return results
+}
+
+export const getSerieDetails = async (id: string): Promise<SerieDetails> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.THEMOVIEDB_API}&append_to_response=credits,videos`,
+  )
+
+  const serieDetails: SerieDetails = await res.json()
+
+  return serieDetails
 }
