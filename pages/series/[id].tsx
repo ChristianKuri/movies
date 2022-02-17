@@ -83,7 +83,7 @@ export default function SeriePage({ serie }: Props) {
         <div className="container px-4 py-16 mx-auto">
           <h2 className="text-4xl font-semibold">Cast</h2>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {serie.credits?.cast.slice(0, 8).map((cast) => (
+            {serie.credits?.cast.map((cast) => (
               <div className="mt-8">
                 <a href={`/actors/${cast.id}`}>
                   <ProfilePhoto cast={cast} />
