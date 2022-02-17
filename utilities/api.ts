@@ -1,3 +1,4 @@
+import { GetMovieSearchResults, GetSerieSearchResults } from '../types'
 import {
   Country,
   Genre,
@@ -77,12 +78,22 @@ export const getWatchProviders = async (id: string): Promise<Country> => {
   return results
 }
 
-export const getSearch = async (query: string): Promise<Movie[]> => {
+export const getSearchMovies = async (query: string): Promise<Movie[]> => {
   const res = await fetch(
     `https://api.themoviedb.org/3/search/movie?api_key=${process.env.THEMOVIEDB_API}&query=${query}`,
   )
 
-  const { results }: GetSearchResults = await res.json()
+  const { results }: GetMovieSearchResults = await res.json()
+
+  return results
+}
+
+export const getSearchSeries = async (query: string): Promise<Serie[]> => {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/tv?api_key=${process.env.THEMOVIEDB_API}&query=${query}`,
+  )
+
+  const { results }: GetSerieSearchResults = await res.json()
 
   return results
 }

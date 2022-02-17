@@ -196,9 +196,16 @@ export interface ProvidersByCountry {
   rent?: Provider[]
 }
 
-export interface GetSearchResults {
+export interface GetMovieSearchResults {
   page: number
   results: Movie[]
+  total_pages: number
+  total_results: number
+}
+
+export interface GetSerieSearchResults {
+  page: number
+  results: Serie[]
   total_pages: number
   total_results: number
 }

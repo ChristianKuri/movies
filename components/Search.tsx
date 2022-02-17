@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Movie } from '../types'
+import { Movie, Serie } from '../types'
 import imageLoader from '../utilities/imageLoader'
 import useDebounce from '../hooks/useDebounce'
 
 export default function Search() {
   const [search, setSearch] = useState<string>('')
-  const [results, setResults] = useState<Movie[]>([])
+  const [results, setResults] = useState<Movie[] | Serie[]>([])
 
   const debouncedSearch = useDebounce(search, 400)
 
@@ -44,18 +44,22 @@ export default function Search() {
       {results.length > 0 && (
         <div className="absolute z-50 w-64 mt-4 text-sm bg-gray-800 rounded">
           <ul>
-            {results.map((movie) => (
+            {results.map((result) => (
               <li className="border-b border-gray-700">
                 <a
-                  href={`/movies/${movie.id}`}
+                  href={
+                    'title' in result
+                      ? `/movies/${result.id}`
+                      : `/series/${result.id}`
+                  }
                   className="flex items-center px-3 py-3 transition duration-150 ease-in-out hover:bg-gray-700"
                 >
                   <Image
                     loader={imageLoader}
                     unoptimized
                     src={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w92/${movie.poster_path}`
+                      result.poster_path
+                        ? `https://image.tmdb.org/t/p/w92/${result.poster_path}`
                         : 'https://via.placeholder.com/50x75'
                     }
                     alt="poster"
@@ -63,7 +67,9 @@ export default function Search() {
                     width={50}
                     height={75}
                   />
-                  <span className="ml-4">{movie.title}</span>
+                  <span className="ml-4">
+                    {'title' in result ? result.title : result.name}
+                  </span>
                 </a>
               </li>
             ))}
