@@ -1,4 +1,3 @@
-import { GetMovieSearchResults, GetSerieSearchResults } from '../types'
 import {
   Country,
   Genre,
@@ -7,7 +6,6 @@ import {
   GetPopularMoviesResults,
   GetPopularPeopleResults,
   GetPopularSeriesResults,
-  GetSearchResults,
   GetTopRatedSeriesResults,
   GetWatchProvidersResults,
   Movie,
@@ -16,6 +14,8 @@ import {
   PersonDetails,
   Serie,
   SerieDetails,
+  GetMovieSearchResults,
+  GetSerieSearchResults,
 } from '../types'
 
 export const getPopularMovies = async (): Promise<Movie[]> => {
